@@ -1,13 +1,11 @@
 import 'package:bike_app/core/const/app_const.dart';
+import 'package:bike_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../product_details/pages/product_details_screen.dart';
 import '../shapes/curve_painter.dart';
 
 class ProductsGridWidget extends StatelessWidget {
-  const ProductsGridWidget({
-    super.key,
-  });
+  const ProductsGridWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,34 +22,18 @@ class ProductsGridWidget extends StatelessWidget {
                     ? const EdgeInsets.only(bottom: 30)
                     : const EdgeInsets.only(top: 30),
                 child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) =>
-                          const ProductDetailsScreen(),
-                      transitionDuration:
-                          const Duration(seconds: 1),
-                      transitionsBuilder: (_, a, __, c) =>
-                          FadeTransition(
-                              opacity: a, child: c),
-                    ),
-                  ),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.product),
                   child: CustomPaint(
                     painter: CurvePainter(),
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Center(
                         child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          mainAxisAlignment:
-                              MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
+                            const SizedBox(height: 30),
                             Align(
                               alignment: Alignment.topRight,
                               child: SvgPicture.asset(
@@ -60,16 +42,13 @@ class ProductsGridWidget extends StatelessWidget {
                                     : "${AppConst.svg}Outline.svg",
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                             Image.asset(data.img),
                             const SizedBox(height: 10),
                             Text(
                               data.categoryName,
                               style: TextStyle(
-                                color: Colors.white
-                                    .withOpacity(.6),
+                                color: Colors.white.withOpacity(.6),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -87,8 +66,7 @@ class ProductsGridWidget extends StatelessWidget {
                             Text(
                               data.price,
                               style: TextStyle(
-                                color: Colors.white
-                                    .withOpacity(.6),
+                                color: Colors.white.withOpacity(.6),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
