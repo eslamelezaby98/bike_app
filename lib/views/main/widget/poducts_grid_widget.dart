@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../shapes/curve_painter.dart';
 
-class ProductsGridWidget extends StatelessWidget {
+class ProductsGridWidget extends StatefulWidget {
   const ProductsGridWidget({super.key});
 
+  @override
+  State<ProductsGridWidget> createState() => _ProductsGridWidgetState();
+}
+
+class _ProductsGridWidgetState extends State<ProductsGridWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -18,12 +23,16 @@ class ProductsGridWidget extends StatelessWidget {
       childAspectRatio: .55,
       physics: const NeverScrollableScrollPhysics(),
       children: AppConst.productsImages
-          .map((data) => Padding(
-                padding: data.index % 2 != 0
+          .map((product) => Padding(
+                padding: product.index % 2 != 0
                     ? const EdgeInsets.only(bottom: 30)
                     : const EdgeInsets.only(top: 30),
                 child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, AppRoutes.product),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.product,
+                    arguments: product,
+                  ),
                   child: CustomPaint(
                     painter: CurvePainter(),
                     child: Container(
@@ -37,17 +46,24 @@ class ProductsGridWidget extends StatelessWidget {
                             const SizedBox(height: 30),
                             Align(
                               alignment: Alignment.topRight,
-                              child: SvgPicture.asset(
-                                data.isFavorite
-                                    ? "${AppConst.svg}Vector.svg"
-                                    : "${AppConst.svg}Outline.svg",
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    product.isFavorite = !product.isFavorite;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  product.isFavorite
+                                      ? "${AppConst.svg}Vector.svg"
+                                      : "${AppConst.svg}Outline.svg",
+                                ),
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Image.asset(data.img),
+                            Image.asset(product.img),
                             const SizedBox(height: 10),
                             Text(
-                              data.categoryName,
+                              product.categoryName,
                               style: TextStyle(
                                 color: Colors.white.withOpacity(.6),
                                 fontSize: 15,
@@ -56,7 +72,7 @@ class ProductsGridWidget extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              data.name,
+                              product.name,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -65,7 +81,7 @@ class ProductsGridWidget extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              data.price,
+                              product.price,
                               style: TextStyle(
                                 color: Colors.white.withOpacity(.6),
                                 fontSize: 15,

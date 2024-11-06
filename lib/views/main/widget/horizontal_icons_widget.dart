@@ -26,7 +26,7 @@ class _HorizontaliconsWidgetState extends State<HorizontaliconsWidget> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(0.0),
               child: Row(
                 children:
                     List.generate(AppConst.horizontalListIcons.length, (index) {
@@ -43,7 +43,7 @@ class _HorizontaliconsWidgetState extends State<HorizontaliconsWidget> {
                         width: 50,
                         height: AppConst.horizontalListIcons.length * 10,
                         margin: EdgeInsets.only(
-                          right: 15,
+                          right: 20,
                           bottom: index * 3,
                         ),
                         padding: const EdgeInsets.all(12),

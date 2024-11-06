@@ -5,6 +5,7 @@ class ProductModel {
   String categoryName;
   bool isFavorite;
   int index;
+  String? description;
 
   ProductModel({
     required this.img,
@@ -13,5 +14,6 @@ class ProductModel {
     required this.categoryName,
     required this.isFavorite,
     required this.index,
+    this.description,
   });
 }

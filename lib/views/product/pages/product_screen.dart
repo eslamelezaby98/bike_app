@@ -1,20 +1,24 @@
 import 'package:bike_app/core/const/app_const.dart';
 import 'package:bike_app/core/theme/app_color.dart';
 import 'package:bike_app/core/utils/app_uitls.dart';
+import 'package:bike_app/views/main/model/product_model.dart';
+import 'package:bike_app/views/product/widget/active_bottom_sheet_element.dart';
+import 'package:bike_app/views/product/widget/bottom_sheet_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+  const ProductScreen({super.key, required this.product});
+  final ProductModel product;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  bool _openDescription = false;
+  bool _openDescription = true;
   int position = 0;
 
   @override
@@ -34,7 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
         bottom: false,
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          bottomSheet: buildBottomSheet(),
+          bottomSheet: buildBottomSheet(widget.product),
           body: Material(
             color: AppColor.black70,
             child: Stack(
@@ -89,11 +93,11 @@ class _ProductScreenState extends State<ProductScreen> {
                                   ),
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: Text(
-                                  "PEUGEOT - LR01",
+                                  widget.product.name,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -167,7 +171,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  buildBottomSheet() {
+  buildBottomSheet(ProductModel product) {
     return AnimatedContainer(
       height: _openDescription ? 500.0 : 100.0,
       duration: const Duration(seconds: 3),
@@ -193,69 +197,33 @@ class _ProductScreenState extends State<ProductScreen> {
                     _openDescription = !_openDescription;
                   }),
                   child: _openDescription
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0xff252B39),
-                                spreadRadius: 0,
-                                blurRadius: 10,
-                                offset: Offset(4, 4),
-                              ),
-                              BoxShadow(
-                                color: Color(0xff38445A),
-                                spreadRadius: 0,
-                                blurRadius: 10,
-                                offset: Offset(-4, -4),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                            color: AppColor.descriptionCardColor,
-                          ),
-                          child: Text(
-                            "Description",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: _openDescription
-                                  ? FontWeight.bold
-                                  : FontWeight.w400,
-                              fontSize: 15,
-                              foreground: Paint()
-                                ..shader = _openDescription
-                                    ? AppColor.textLinearGradientColor
-                                    : AppColor.textColorDescription,
-                            ),
-                          ),
+                      ? ActiveBottomSheetElement(
+                          openDescription: _openDescription,
+                          text: "Description",
                         )
-                      : _buildNoActiveElement("Description"),
+                      : const BottomSheetElement(text: "Description"),
                 ),
-                _buildNoActiveElement("Specification")
+                const BottomSheetElement(text: "Specification")
               ],
             ),
           ),
-          const SizedBox(
-            height: 50,
-          ),
+          const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "PEUGEOT - LR01",
-                  style: TextStyle(
+                Text(
+                  product.name,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Text(
-                  "The LR01 uses the same design as the most iconic bikes from PEUGEOT Cycles' 130-year history and combines it with agile, dynamic performance that's perfectly suited to navigating today's cities. As well as a lugged steel frame and iconic PEUGEOT black-and-white chequer design, this city bike also features a 16-speed Shimano Claris drivetrain.",
+                  product.description!,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
@@ -286,9 +254,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    "\$ 1,999.99",
-                    style: TextStyle(
+                  Text(
+                    "\$ ${product.price}",
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 24,
                       color: Color(0xff3D9CEA),
@@ -325,33 +293,6 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Container _buildNoActiveElement(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xff202633),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: Offset(4, 4),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(15),
-        color: const Color(0xff28303F),
-      ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 15,
-          color: Colors.white.withOpacity(.6),
-        ),
       ),
     );
   }
