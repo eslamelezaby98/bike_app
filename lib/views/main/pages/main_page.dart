@@ -1,9 +1,10 @@
 import 'package:bike_app/core/theme/app_color.dart';
-import 'package:bike_app/views/main/shapes/rectangle_home_shape.dart';
 import 'package:bike_app/views/main/widget/custom_bottom_nav.dart';
 import 'package:bike_app/views/main/widget/horizontal_icons_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import '../../../core/const/app_const.dart';
 import '../widget/bike_card_widget.dart';
 import '../widget/custom_app_bar.dart';
 import '../widget/poducts_grid_widget.dart';
@@ -13,9 +14,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: SafeArea(
@@ -25,16 +23,12 @@ class MainScreen extends StatelessWidget {
           color: AppColor.black70,
           child: Stack(
             children: [
-              Align(
-                alignment: Alignment.bottomRight,
-                child: CustomPaint(
-                  size: Size(
-                    width,
-                    height - 140,
+               Align(
+                  alignment: Alignment.bottomRight,
+                  child: SvgPicture.asset(
+                    "${AppConst.svg}home_bkg.svg",
                   ),
-                  painter: RectangleHomeShape(),
                 ),
-              ),
               const SafeArea(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
