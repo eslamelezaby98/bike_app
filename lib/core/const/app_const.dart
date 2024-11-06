@@ -53,4 +53,10 @@ class AppConst {
       index: 3,
     )
   ];
+
+  static List<String> images = [
+    "${image}Electric_Bicycle.png",
+    "${image}Electric_Bicycle.png",
+    "${image}robert-bye.png"
+  ];
 }
