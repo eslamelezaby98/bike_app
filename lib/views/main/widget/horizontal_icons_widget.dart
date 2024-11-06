@@ -26,10 +26,11 @@ class _HorizontaliconsWidgetState extends State<HorizontaliconsWidget> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Row(
                 children:
                     List.generate(AppConst.horizontalListIcons.length, (index) {
+                  var item = AppConst.horizontalListIcons[index];
                   return InkWell(
                     onTap: () {
                       setState(() {
@@ -42,7 +43,7 @@ class _HorizontaliconsWidgetState extends State<HorizontaliconsWidget> {
                         width: 50,
                         height: AppConst.horizontalListIcons.length * 10,
                         margin: EdgeInsets.only(
-                          right: 30,
+                          right: 15,
                           bottom: index * 3,
                         ),
                         padding: const EdgeInsets.all(12),
@@ -55,14 +56,24 @@ class _HorizontaliconsWidgetState extends State<HorizontaliconsWidget> {
                                         const Color(0xff363E51),
                                         const Color(0xff191E26)
                                       ])),
-                        child: SvgPicture.asset(
-                          AppConst.horizontalListIcons[index],
-                          height: 5,
-                          width: 10,
-                          fit: BoxFit.contain,
-                          color:
-                              currentIcon == index ? Colors.white : Colors.grey,
-                        ),
+                        child: index == 0
+                            ? Text(
+                                "All",
+                                style: TextStyle(
+                                  color: currentIcon == index
+                                      ? Colors.white
+                                      : Colors.grey,
+                                ),
+                              )
+                            : SvgPicture.asset(
+                                item,
+                                height: 5,
+                                width: 10,
+                                fit: BoxFit.contain,
+                                color: currentIcon == index
+                                    ? Colors.white
+                                    : Colors.grey,
+                              ),
                       ),
                     ),
                   );

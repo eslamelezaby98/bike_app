@@ -12,6 +12,7 @@ class ProductsGridWidget extends StatelessWidget {
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       crossAxisSpacing: 20,
       mainAxisSpacing: 0,
       childAspectRatio: .55,

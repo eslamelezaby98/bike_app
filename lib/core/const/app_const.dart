@@ -6,11 +6,11 @@ class AppConst {
   static const String svg = "assets/svg/";
 
   static const List<String> horizontalListIcons = [
-    "${svg}All.svg",
-    "${svg}bicycle.svg",
-    "${svg}map.fill.svg",
-    "${svg}doc.text.fill.svg",
-    "${svg}map.fill.svg",
+    "",
+    "${svg}icon2.svg",
+    "${svg}icon3.svg",
+    "${svg}icon4.svg",
+    "${svg}icon5.svg",
   ];
   static const List<String> bottomNavItems = [
     "${svg}bicycle.svg",
